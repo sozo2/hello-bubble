@@ -61,7 +61,7 @@ var s3 = new aws.S3({
 
 var upload = multer({destination: '/'});
 
-module.exports = function (app) {
+// module.exports = function (app) {
 
     app.post('/api/upload', upload.single("imageFile"), function (req, res) {
         let newfilename = uuid() + req.file.originalname;
@@ -107,7 +107,7 @@ module.exports = function (app) {
         })
     });
 
-}
+// }
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build/index.html'));
