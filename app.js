@@ -63,7 +63,7 @@ var upload = multer({destination: '/'});
 
 // module.exports = function (app) {
 
-    app.post('/api/upload', upload.single("imageFile"), (req, res) => {
+    app.post('/api/upload', upload.single("imageFile"), function(req, res) {
         let newfilename = uuid() + req.file.originalname;
         const params = {
             Bucket: 'hello-bubble',
@@ -102,6 +102,7 @@ var upload = multer({destination: '/'});
               console.log(err);
               res.json([]);
           } else{
+              console.log("All images API");
               res.json(images);
           }
         })
