@@ -63,7 +63,7 @@ var upload = multer({destination: '/'});
 
 // module.exports = function (app) {
 
-    app.post('/api/upload', upload.single("imageFile"), function (req, res) {
+    app.post('/api/upload', upload.single("imageFile"), (req, res) => {
         let newfilename = uuid() + req.file.originalname;
         const params = {
             Bucket: 'hello-bubble',
@@ -96,7 +96,7 @@ var upload = multer({destination: '/'});
         });
     });
 
-    app.get('/api/all-images', function (req, res) {
+    app.get('/api/all-images', (req, res) => {
         Image.find(function(err,images){
           if(err) {
               console.log(err);

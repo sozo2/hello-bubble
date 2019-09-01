@@ -21,6 +21,7 @@ class Home extends Component {
                 current_image: this.getRandomIndex(res.data) 
             });
             this.intervalID = setTimeout(this.grabAllImages.bind(this), 5000);
+            console.log("Hi there");
         }); 
     }
 
