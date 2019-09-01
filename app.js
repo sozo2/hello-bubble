@@ -28,7 +28,6 @@ var ImageSchema = new mongoose.Schema({
 var Image = mongoose.model('Image', ImageSchema);
 
 
-
 app.use(express.static(path.join(__dirname, 'build')));
 
 var whitelisted = ['http://localhost:3000',
@@ -55,8 +54,8 @@ var aws = require('aws-sdk');
 
 var s3 = new aws.S3({
     region: 'us-east-2',
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    // secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    // accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     bucket: 'hello-bubble'
 });
 

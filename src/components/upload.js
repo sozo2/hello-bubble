@@ -5,9 +5,17 @@ import { Link } from "react-router-dom";
 
 class Upload extends Component { 
 
-    state = {
-        imageFile: '',
-        imageLink: ''
+    constructor(props) {
+        super(props);
+
+        this.onChangeUploadImage = this.onChangeUploadImage.bind(this);
+        this.onChangeImageLink = this.onChangeImageLink.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+
+        this.state = {
+            imageFile: '',
+            imageLink: ''
+        }
     }
     
 

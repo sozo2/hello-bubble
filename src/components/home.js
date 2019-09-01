@@ -25,7 +25,7 @@ class Home extends Component {
     }
 
     getRandomIndex = (arr) => {
-        let randomIdx = Math.random() * length(arr) + 1;
+        let randomIdx = Math.random() * arr.length + 1;
         return arr[randomIdx]; 
     }
 
