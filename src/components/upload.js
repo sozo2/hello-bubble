@@ -21,7 +21,8 @@ class Upload extends Component {
 
     onChangeUploadImage(e) {
         this.setState({
-            imageFile: e.target.files[0]
+            imageFile: e.target.files[0],
+            media_placeholder: e.target.value  
         });
     }
 

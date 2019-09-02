@@ -32,7 +32,7 @@ class Home extends Component {
 
     handleFillBar = () => {
         let current_time = this.state.fill_bar_num;
-        this.setState({fill_bar_num: current_time+0.5, fill_bar_percent: (current_time+0.5) + '%' });
+        this.setState({fill_bar_num: current_time+0.54, fill_bar_percent: (current_time+0.54) + '%' });
         this.fillBarIntervalID = setTimeout(this.handleFillBar.bind(this),25);
     }
 
