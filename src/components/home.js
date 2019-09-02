@@ -25,20 +25,17 @@ class Home extends Component {
                 fill_bar_percent: '0%'
             });
             this.intervalID = setTimeout(this.grabAllImages.bind(this), 5000);
-            console.log("Hi there");
-            console.log(res.data);
         }); 
     }
 
     handleFillBar = () => {
         let current_time = this.state.fill_bar_num;
-        this.setState({fill_bar_num: current_time+0.54, fill_bar_percent: (current_time+0.54) + '%' });
+        this.setState({fill_bar_num: current_time+0.53, fill_bar_percent: (current_time+0.53) + '%' });
         this.fillBarIntervalID = setTimeout(this.handleFillBar.bind(this),25);
     }
 
     getRandomIndex = (arr) => {
         let randomIdx = Math.floor(Math.random() * arr.length);
-        console.log(randomIdx);
         return arr[randomIdx].source; 
     }
 

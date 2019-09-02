@@ -35,15 +35,12 @@ class Upload extends Component {
     onSubmit(e) {
         e.preventDefault();
         let formData = new FormData();
-
         formData.append('imageFile', this.state.imageFile);
         formData.append('imageLink', this.state.imageLink);
-        console.log(formData);
         axios.post('/api/upload', formData)
             .then(function(res) { 
-                console.log(res.data);
+                console.log("Image upload successful");
             });
-
         this.setState({
             imageFile: '',
             imageLink: '',
