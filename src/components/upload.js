@@ -64,7 +64,8 @@ class Upload extends Component {
                         name="imageFile"
                         onChange={this.onChangeUploadImage}
                         accept="image/png, image/jpeg, image/jpg"
-                        style={{width:'50%', 'font-size': '18px'}}
+                        style={{width:'50%', 'font-size': '18px'}} 
+                        disabled={this.state.imageLink=="" ? false : true}
                 />
             </div>
 
@@ -77,6 +78,7 @@ class Upload extends Component {
                         onChange={this.onChangeImageLink}
                         name="imageLink"
                         id="link-input"
+                        disabled={this.state.imageFile=="" ? false : true}
                 />
             </div>
                    
