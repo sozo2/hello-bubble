@@ -17,7 +17,6 @@ class Upload extends Component {
             imageLink: ''
         }
     }
-    
 
     onChangeUploadImage(e) {
         this.setState({
@@ -64,6 +63,7 @@ class Upload extends Component {
                         type="file" 
                         name="imageFile"
                         onChange={this.onChangeUploadImage}
+                        value={this.state.imageFile}
                         accept="image/png, image/jpeg, image/jpg"
                         style={{width:'50%', 'font-size': '18px'}}
                 />
