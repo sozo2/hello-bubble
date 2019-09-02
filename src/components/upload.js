@@ -14,7 +14,8 @@ class Upload extends Component {
 
         this.state = {
             imageFile: '',
-            imageLink: ''
+            imageLink: '',
+            media_placeholder: ''
         }
     }
 
@@ -44,7 +45,8 @@ class Upload extends Component {
 
         this.setState({
             imageFile: '',
-            imageLink: ''
+            imageLink: '',
+            media_placeholder: ''
         });
     }
 
@@ -59,11 +61,10 @@ class Upload extends Component {
 
             <div className="form-group">
                 <label style={{'font-weight':'500'}}>upload an image:</label>
-                <input 
+                <input  value={this.state.media_placeholder}
                         type="file" 
                         name="imageFile"
                         onChange={this.onChangeUploadImage}
-                        value={this.state.imageFile}
                         accept="image/png, image/jpeg, image/jpg"
                         style={{width:'50%', 'font-size': '18px'}}
                 />
