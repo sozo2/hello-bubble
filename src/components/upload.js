@@ -21,7 +21,7 @@ class Upload extends Component {
 
     onChangeUploadImage(e) {
         this.setState({
-            imageFile: e.target.value
+            imageFile: e.target.files[0]
         });
     }
 
@@ -37,7 +37,7 @@ class Upload extends Component {
 
         formData.append('imageFile', this.state.imageFile);
         formData.append('imageLink', this.state.imageLink);
-
+        console.log(formData);
         axios.post('/api/upload', formData)
             .then(function(res) { 
                 console.log(res.data);
@@ -53,33 +53,39 @@ class Upload extends Component {
     render() {
       return (
         <div>
-          Upload a new photo
-          <Link to={"/"}><button>Return to Slideshow</button></Link>
+            <h1 className="center-title">Upload a Photo!</h1> 
+          <Link to={"/"}><button className="bubble-button" id="return-button">Return to Slideshow</button></Link>
+          <div id="form-wrapper">
           <form onSubmit={this.onSubmit}>
 
             <div className="form-group">
-                <label>Upload an image: </label>
+                <label style={{'font-weight':'500'}}>upload an image:</label>
                 <input 
                         type="file" 
                         name="imageFile"
                         onChange={this.onChangeUploadImage}
                         accept="image/png, image/jpeg, image/jpg"
+                        style={{width:'50%', 'font-size': '18px'}}
                 />
             </div>
 
+            <div className="form-group" style={{'margin-top':'15px', 'font-style': 'oblique'}}>or</div> 
+
             <div className="form-group"> 
-                <label>Or submit link to an image: </label>
+                <label style={{'font-weight':'500'}}>submit link to an image:</label>
                 <input  type="text"
                         value={this.state.imageLink}
                         onChange={this.onChangeImageLink}
                         name="imageLink"
+                        id="link-input"
                 />
             </div>
                    
                     <div className="form-group">
-                        <input id="upload-image" type="submit" value="Upload!" />
+                        <input id="upload-submit" type="submit" value="Upload" />
                     </div>
                 </form>
+                </div>
         </div>
     )
   }

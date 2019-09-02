@@ -7,14 +7,10 @@ mongoose.set('useCreateIndex', true);
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/Bubble', {useNewUrlParser: true});
 
 var PORT = process.env.PORT || 8000;
-
 var app = express();
 app.use(bodyParser.json());
 
-
-//model stuff 
-
-var Schema = mongoose.Schema
+//IMAGE COLLECTION MODEL
 var ImageSchema = new mongoose.Schema({
     source: {
         type: String
@@ -27,14 +23,12 @@ var ImageSchema = new mongoose.Schema({
 });
 var Image = mongoose.model('Image', ImageSchema);
 
-
+//WHITELISTING
 app.use(express.static(path.join(__dirname, 'build')));
-
 var whitelisted = ['http://localhost:3000',
                   'http://localhost:8000',
                   'https://hello-bubble.herokuapp.com',
                   'https://hello-bubble.s3.us-east-2.amazonaws.com'];
-
 
 app.use(cors({
   origin: function(origin, callback){
@@ -48,22 +42,22 @@ app.use(cors({
   }
 }));
 
+//MULTER (IMAGE UPLOAD) CONFIG
 var multer  = require('multer');
 const uuid = require('uuid/v4');
 var aws = require('aws-sdk');
-
 var s3 = new aws.S3({
     region: 'us-east-2',
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     bucket: 'hello-bubble'
 });
+var upload = multer({destination: '/'});
 
-// var upload = multer({destination: '/'});
-
-// module.exports = function (app) {
-
-    app.post('/api/upload', function(req, res) {
+//ROUTING AND API FUNCTIONS
+app.post('/api/upload', upload.single("imageFile"), function(req, res) {
+    if (req.body.imageFile != '') {
+        console.log("Starting upload...")
         let newfilename = uuid() + req.file.originalname;
         const params = {
             Bucket: 'hello-bubble',
@@ -78,36 +72,43 @@ var s3 = new aws.S3({
                 console.log(data);
             }
         });
-        console.log("Image uploaded successfully to: " + req.file.path);
-        Image.findOne({source}, function(){
-            if(err){
+        console.log("Image uploaded successfully to: " + newfilename);
+        image = new Image({source: "https://hello-bubble.s3.us-east-2.amazonaws.com/" + newfilename})
+        image.save(function(err, image){
+            if(err) {
                 console.log(err)
+                res.json([]);
             } else {
-                image = {"image": source}
-                Image.save(function(err, image){
-                    if(err) {
-                        console.log(err)
-                        res.json([]);
-                    } else {
-                        res.json(image);
-                    }
-                });
+                res.json(image);
             }
         });
-    });
+    }
+    else if(req.body.imageLink!=''){
+        image = new Image({source: req.body.imageLink})
+        image.save(function(err, image){
+            if(err) {
+                console.log(err)
+                res.json([]);
+            } else {
+                res.json(image);
+            }
+        });
+    } else {
+        console.log("No images uploaded")
+        res.json([]);
+    }
+});
 
-    app.get('/api/all-images', (req, res) => {
-        Image.find(function(err,images){
-          if(err) {
-              console.log(err);
-              res.json([]);
-          } else{
-              res.json(images);
-          }
-        })
-    });
-
-// }
+app.get('/api/all-images', (req, res) => {
+    Image.find(function(err,images){
+        if(err) {
+            console.log(err);
+            res.json([]);
+        } else{
+            res.json(images);
+        }
+    })
+});
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build/index.html'));
